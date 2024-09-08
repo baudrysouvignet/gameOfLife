@@ -5,8 +5,8 @@ class Cells:
     def __init__(self, x:int, y:int,):
         if not all(isinstance(x, int) for x in (x, y)):
             raise ValueError(Cells.COORDINATE_TYPE_ERROR_MSG)
-        self.r = x
-        self.i = y
+        self.x = x
+        self.y = y
         self.state = False
 
     def set_state(self, state: bool) -> None:

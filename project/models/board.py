@@ -3,8 +3,11 @@ from project.models.cells import Cells
 
 class Board:
     DIMENSION_TYPE_ERROR_MSG = "Height and width must be integers"
+
     INITIAL_POSITION_OUT_OF_RANGE = "Position out of range"
     INITIAL_COORDINATE_DATA_ERROR = "The coordinates entered do not match the expected format"
+
+    CELL_TYPE_ERROR_MSG = "The 'cell' argument must be of type 'Cells'"
 
     def __init__(self, height: int, width: int)-> None:
         if not all(isinstance(x, int) for x in (height, width)):
@@ -20,8 +23,21 @@ class Board:
         ):
             raise ValueError(Board.INITIAL_COORDINATE_DATA_ERROR)
 
-        for position in positions:
-            if self.width > position[0] >= 0 and self.height > position[1] >= 0:
-                self.grid[position[0]][position[1]].set_state(True)
+        for coordinate in positions:
+            if self.width > coordinate[0] >= 0 and self.height > coordinate[1] >= 0:
+                self.grid[coordinate[0]][coordinate[1]].set_state(True)
             else:
                 raise ValueError(Board.INITIAL_POSITION_OUT_OF_RANGE)
+
+    def calcul_neighbours(self, cell: Cells):
+        if not isinstance(cell, Cells):
+            raise ValueError(Board.CELL_TYPE_ERROR_MSG)
+
+        neighbours = [
+            (x, y)
+            for x in range(cell.x-1, cell.x+2)
+            for y in range(cell.y -1, cell.y+2)
+            if (x, y) != (cell.x, cell.y) and 0 <= x < self.width and 0 <= y < self.height
+        ]
+
+        return sum(self.grid[pos[0]][pos[1]].state for pos in neighbours)

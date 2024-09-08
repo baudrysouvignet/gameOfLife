@@ -16,7 +16,7 @@ class TestBoard(unittest.TestCase):
         self.board.set_initial_grid(data)
         self.assertTrue(all(self.board.grid[coordinates[0]][coordinates[1]].state for coordinates in data))
 
-    def test_board_out_init_of_range(self):
+    def test_board_init_out_of_range(self):
         data = ([10, 10],)
         with self.assertRaises(ValueError) as context:
             self.board.set_initial_grid(data)
