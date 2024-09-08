@@ -29,7 +29,7 @@ class Board:
             else:
                 raise ValueError(Board.INITIAL_POSITION_OUT_OF_RANGE)
 
-    def __calcul_neighbours(self, cell: Cells):
+    def __calcul_neighbours(self, cell: Cells) -> int:
         if not isinstance(cell, Cells):
             raise ValueError(Board.CALCUL_NEIGHBOURS_CELL_TYPE_ERROR_MSG)
 
@@ -41,3 +41,16 @@ class Board:
         ]
 
         return sum(self.grid[pos[0]][pos[1]].state for pos in neighbours)
+
+    def next_grid(self) -> None:
+        new_grid = [[Cells(x, y) for x in range(self.height)]for y in range(self.width)]
+
+        for x in range(self.height):
+            for y in range(self.width):
+                neighbours = self.__calcul_neighbours(self.grid[x][y])
+                if self.grid[x][y].state :
+                    new_grid[x][y].set_state(neighbours in [2, 3])
+                else:
+                    new_grid[x][y].set_state(neighbours == 3)
+
+        self.grid = new_grid
