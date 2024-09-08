@@ -7,7 +7,7 @@ class Board:
     INITIAL_POSITION_OUT_OF_RANGE = "Position out of range"
     INITIAL_COORDINATE_DATA_ERROR = "The coordinates entered do not match the expected format"
 
-    CELL_TYPE_ERROR_MSG = "The 'cell' argument must be of type 'Cells'"
+    CALCUL_NEIGHBOURS_CELL_TYPE_ERROR_MSG = "The 'cell' argument must be of type 'Cells'"
 
     def __init__(self, height: int, width: int)-> None:
         if not all(isinstance(x, int) for x in (height, width)):
@@ -29,9 +29,9 @@ class Board:
             else:
                 raise ValueError(Board.INITIAL_POSITION_OUT_OF_RANGE)
 
-    def calcul_neighbours(self, cell: Cells):
+    def __calcul_neighbours(self, cell: Cells):
         if not isinstance(cell, Cells):
-            raise ValueError(Board.CELL_TYPE_ERROR_MSG)
+            raise ValueError(Board.CALCUL_NEIGHBOURS_CELL_TYPE_ERROR_MSG)
 
         neighbours = [
             (x, y)
