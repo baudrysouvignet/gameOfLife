@@ -2,7 +2,7 @@ import unittest
 from project.models.board import Board
 
 
-class TestBoard(unittest.TestCase):
+class TestBoardCalcul(unittest.TestCase):
     def setUp(self):
         self.board = Board(4, 4)
 
