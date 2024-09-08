@@ -24,7 +24,7 @@ class Board:
             raise ValueError(Board.INITIAL_COORDINATE_DATA_ERROR)
 
         for coordinate in positions:
-            if self.width > coordinate[0] >= 0 and self.height > coordinate[1] >= 0:
+            if self.width > coordinate[1] >= 0 and self.height > coordinate[0] >= 0:
                 self.grid[coordinate[0]][coordinate[1]].set_state(True)
             else:
                 raise ValueError(Board.INITIAL_POSITION_OUT_OF_RANGE)
@@ -39,18 +39,17 @@ class Board:
             for y in range(cell.y -1, cell.y+2)
             if (x, y) != (cell.x, cell.y) and 0 <= x < self.width and 0 <= y < self.height
         ]
-
-        return sum(self.grid[pos[0]][pos[1]].state for pos in neighbours)
+        return sum(self.grid[pos[1]][pos[0]].state for pos in neighbours)
 
     def next_grid(self) -> None:
         new_grid = [[Cells(x, y) for x in range(self.width)]for y in range(self.height)]
 
-        for x in range(self.width):
-            for y in range(self.height):
-                neighbours = self.__calcul_neighbours(self.grid[x][y])
-                if self.grid[x][y].state :
-                    new_grid[x][y].set_state(neighbours in [2, 3])
+        for x in range(self.width - 1):
+            for y in range(self.height - 1):
+                neighbours = self.__calcul_neighbours(self.grid[y][x])
+                if self.grid[y][x].state :
+                    new_grid[y][x].set_state(neighbours in [2, 3])
                 else:
-                    new_grid[x][y].set_state(neighbours == 3)
+                    new_grid[y][x].set_state(neighbours == 3)
 
         self.grid = new_grid
