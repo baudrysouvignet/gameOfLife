@@ -1,4 +1,4 @@
-from project.models.cells import Cells
+from .cells import Cells
 
 
 class Board:

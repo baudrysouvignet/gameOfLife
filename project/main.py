@@ -2,7 +2,7 @@ import pygame
 import random
 
 
-from project.models.board import Board
+from models.board import Board
 
 HEIGHT = 30
 WIDTH = 60
